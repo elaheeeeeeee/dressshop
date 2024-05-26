@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">سبد خرید</h1>
+                <p class="lead fw-normal text-white-50 mb-0">اینجا میتونی لیست کالا هایی که انتخاب کردی رو ببینی</p>
+            </div>
+        </div>
+    </header>
+    <br>
+{% if cart_products %}
+    {% for product in cart_products %}
+    <div class="container">
+        <div class="card mb-3" >
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p class="card-text">{{ product.description }}</p>
+                  {% if product.is_sale %}
+                  <p class="card-text"><strike> {{ product.price | intcomma }}تومان</strike><br>
+                    {{ product.sale_price | intcomma }}تومان</p>
+                  {% else %}
+                  <p class="card-text">{{ product.price }}</p>
+                  {% endif %}
+    
+                 
+                  <a href="{% url 'home' %}" class="btn btn-secondary">برگرد به صفحه ی اصلی</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% else %}
+    <center><h5 class="card-title"> !محصولی در سبد خرید شما وجود ندارد!</h5></center>
+
+{% endif %}
+    <!-- Section-->
+    <br> <br><br> <br><br> <br><br> <br>
+    
+    {% endblock %}
+    
